@@ -5,13 +5,7 @@ for OpenUSD workflows.
 
 Kit on OV Libraries is in **Early Access** and is provided as a developer preview
 to help you explore the new architecture, evaluate your applications and
-extensions, and provide feedback. Early Access 2 (EA2) adds physics through
-ovphysx, live collaboration through ovlive, Linux ARM64 availability, and updates
-to the integrated libraries.
-
-> [!NOTE]
-> **EA2 documentation draft:** Downloads and final component versions are pending.
-> See [Downloads](#downloads) for placeholders.
+extensions, and provide feedback.
 
 > [!IMPORTANT]
 > This is **early access software**, provided as is for evaluation and use at your
@@ -34,15 +28,11 @@ RTX rendering, user interfaces, physics, and live collaboration.
 
 | Library | Version | Role and Availability |
 | --- | --- | --- |
-| [ovstage](https://github.com/NVIDIA-Omniverse/ovstage) | TBD (EA2) | Shared scene data access and management for OpenUSD-based workflows. |
-| [ovrtx](https://github.com/NVIDIA-Omniverse/ovrtx) | TBD (EA2) | RTX rendering, visualization, and sensor simulation. |
-| [ovui](https://github.com/NVIDIA-Omniverse/ovui) | TBD (EA2) | User interface, widget, and scene interaction capabilities. |
-| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | TBD (EA2) | Physics simulation and basic physics authoring. See [Physics Limitations](#physics-limitations). |
-| [ovlive](https://github.com/NVIDIA-Omniverse/ovlive) | TBD (EA2) | Live Session synchronization for collaborative editing. Participant visualization is not available. |
-
-EA2 updates the integrated library versions. Exact versions will be recorded here
-when the release packages are finalized; do not independently replace bundled
-libraries with newer standalone versions.
+| [ovstage](https://github.com/NVIDIA-Omniverse/ovstage) | 0.4 | Shared scene data access and management for OpenUSD-based workflows. |
+| [ovrtx](https://github.com/NVIDIA-Omniverse/ovrtx) | 0.7 | RTX rendering, visualization, and sensor simulation. |
+| [ovui](https://github.com/NVIDIA-Omniverse/ovui) | 0.3.1 | User interface, widget, and scene interaction capabilities. |
+| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | 0.8 | Physics simulation and basic physics authoring. See [Physics Limitations](#physics-limitations). |
+| [ovlive](https://github.com/NVIDIA-Omniverse/ovlive) | 0.2.0 | Live Session synchronization for collaborative editing. Participant visualization is not available. |
 
 These libraries are also available independently of Kit. Follow the links above
 for their APIs, examples, installation instructions, and license terms.
@@ -61,10 +51,8 @@ before loading it in Kit on OV Libraries.
 
 ## Early Access Releases
 
-| Release | Description |
-| --- | --- |
-| [Early Access 2](CHANGELOG.md#early-access-2) | Updated libraries, physics, live collaboration, Linux ARM64, and performance improvements. |
-| [Early Access 1](CHANGELOG.md#early-access-1) | First release of Kit on OV Libraries for evaluating applications and extensions and providing feedback. |
+This README describes Early Access 2. See the [changelog](CHANGELOG.md) for
+release history and changes between versions.
 
 Early access releases are not officially supported products and do not include
 official support.
@@ -111,7 +99,7 @@ The placeholders below are not download links.
 
 ### Early Access 1 Downloads
 
-The following packages are **EA1**, without EA2 physics or Linux ARM64 support.
+The following packages are **Early Access 1**.
 Use the [EA1 setup documentation](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md)
 with these packages.
 
@@ -135,13 +123,12 @@ its bundled templates, refer to
 
 - **Operating System**: Windows 10/11 (x86_64), Linux x86_64 (Ubuntu 22.04
   or newer), or Linux ARM64 on DGX Spark. Windows ARM64 is not included in EA2.
-  The final DGX Spark OS and minimum driver requirements are pending confirmation.
 
 - **GPU:** An NVIDIA GPU with RTX rendering support.
 
 - **NVIDIA graphics driver:** Windows x86_64 requires **595.97 or later**.
   Linux x86_64 requires **595.58.03 or later**. DGX Spark has been tested with
-  **580.159.03**; this is a tested configuration, not a confirmed minimum.
+  **580.159.03**.
 
 - **Installation folder:** A writable path, such as `C:\OmniverseKit` on Windows
   or `$HOME/OmniverseKit` on Linux. Use a short Windows path to avoid path-length
@@ -240,17 +227,15 @@ Review these limitations before evaluating an application or extension.
 | Linux ARM64 | Available for evaluation on DGX Spark, with a smaller extension set. Asset conversion has partial ARM64 support without FBX. See [Linux ARM64 Limitations](#linux-arm64-limitations). |
 | Color management | OCIO color-management settings are unavailable in the default EA2 workflow; enabling OCIO alone has no effect. |
 | OmniGraph performance | Some OmniGraph workflows have known performance issues. Improvements are planned for a future release. |
-| Performance | EA2 improves scene loading and runtime performance, but does not achieve full Kit 110.4 parity. Content loading, first-frame latency, and timeline playback can still be slower. Performance and stability work continues in subsequent releases. |
+| Performance | Content loading, first-frame latency, and timeline playback can be slower than Kit 110.4. Full performance parity has not been reached. |
 | First launch | Shader compilation can take several minutes, and the window or viewport may remain blank during initialization. Refer to [First Launch and Logs](#first-launch-and-logs). |
-| Fabric | Removed from Kit-facing APIs and extension workflows in this release. Applications and extensions that use Fabric require changes. For scene data APIs and examples, refer to [ovstage](https://github.com/NVIDIA-Omniverse/ovstage). |
-| Hydra | Deprecated in this release. For rendering APIs and examples, refer to the [ovrtx documentation](https://nvidia-omniverse.github.io/ovrtx/). |
+| Fabric | Removed from Kit-facing APIs and extension workflows. Applications and extensions that use Fabric require changes. For scene data APIs and examples, refer to [ovstage](https://github.com/NVIDIA-Omniverse/ovstage). |
+| Hydra | Deprecated. For rendering APIs and examples, refer to the [ovrtx documentation](https://nvidia-omniverse.github.io/ovrtx/). |
 
 ### Linux ARM64 Limitations
 
-The following limitations were identified on `dev/next/111` and are included
-here for EA2 review pending confirmation against the final release packages.
-Some extensions below are also listed under [Removed Extensions](#removed-extensions);
-this table does not imply they are included on other platforms.
+The following extensions have ARM64 limitations. For availability across
+platforms, also refer to [Removed Extensions](#removed-extensions).
 
 | Extension | ARM64 limitation |
 | --- | --- |
@@ -307,8 +292,7 @@ in Kit Base Editor.
 
 #### Removed Extensions
 
-The following extensions were removed in this release compared with Kit 110.x.
-Removal status applies to this release. Future availability is not specified.
+The following extensions from Kit 110.x are not included.
 
 | Area | Removed Extensions |
 | --- | --- |
