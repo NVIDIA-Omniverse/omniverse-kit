@@ -223,7 +223,7 @@ Review these limitations before evaluating an application or extension.
 | Live collaboration | Live synchronization is available through ovlive, but other participants are not visualized in the viewport. |
 | Linux ARM64 | Available for evaluation on DGX Spark, with a smaller extension set. Asset conversion has partial ARM64 support without FBX. See [Linux ARM64 Limitations](#linux-arm64-limitations). |
 | Color management | OCIO color-management settings are unavailable in the default EA2 workflow; enabling OCIO alone has no effect. |
-| OmniGraph performance | Some OmniGraph workflows have known performance issues. Improvements are planned for a future release. |
+| OmniGraph performance | GPU, copy, retype, bundle, and scene workloads can still be slower than Kit 110.4. |
 | Performance | Content loading, first-frame latency, and timeline playback can be slower than Kit 110.4. Full performance parity has not been reached. |
 | First launch | Shader compilation can take several minutes, and the window or viewport may remain blank during initialization. Refer to [First Launch and Logs](#first-launch-and-logs). |
 | Fabric | Removed from Kit-facing APIs and extension workflows. Applications and extensions that use Fabric require changes. For scene data APIs and examples, refer to [ovstage](https://github.com/NVIDIA-Omniverse/ovstage). |
@@ -269,13 +269,12 @@ on ARM64.
 - Opening additional viewport windows can crash Kit on Windows or Linux.
   Avoid workflows that require multiple viewport windows while evaluating EA2.
 
-- Multi-GPU rendering can flicker and fail to display the viewport grid. Do not
-  use multi-GPU rendering in this release.
 - Kit Base Editor is missing the viewport lighting menu. Scenes without lights
   appear black.
 - Plugin loading can report `Ignoring plugin … since a plugin with the same name
   is loaded from … omni.runtime.core`.
-- Spatial audio does not work.
+- Audio listener tracking can retain deleted or deactivated listeners, producing
+  incorrect listener counts or stale listener references.
 - Box selection does not select lights.
 - Duplicate MDL directories can cause errors. As a workaround, close Kit and move
   `exts/omni.runtime.core/bin/deps/mdl` from the extracted SDK folder to another
