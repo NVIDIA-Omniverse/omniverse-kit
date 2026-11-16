@@ -28,7 +28,8 @@ a production migration target.
 
 - Physics simulation and authoring have [documented limitations](README.md#physics-limitations).
 - Live synchronization does not visualize other participants in the viewport.
-- Linux ARM64 does not include every x86_64 extension, including the asset converter.
+- Linux ARM64 has [extension limitations](README.md#linux-arm64-limitations).
+  The asset converter has partial ARM support; FBX is unavailable.
 - OCIO color management is not available through the default EA2 settings.
 - Content loading, startup, and timeline playback can be slower than Kit 110.4.
 - Additional viewport windows can cause crashes on Windows or Linux.
