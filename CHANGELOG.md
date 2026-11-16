@@ -2,7 +2,7 @@
 
 <a id="early-access-2"></a>
 
-## Early Access 2 - Unreleased
+## Early Access 2
 
 EA2 expands the developer preview with physics, live collaboration, Linux ARM64,
 and updated OV Libraries. This release is for evaluation and feedback; it is not
@@ -10,15 +10,15 @@ a production migration target.
 
 ### Added
 
-- Physics simulation and basic authoring through ovphysx, replacing EA1's disabled physics.
+- Physics simulation and basic authoring through ovphysx.
 - Live Session integration through ovlive for collaborative editing.
 - Linux ARM64 SDK and kernel packages for evaluation on DGX Spark, alongside Windows and Linux x86_64.
 - Optional OVRTX loading for applications that only need stage operations without rendering.
 
 ### Changed
 
-- Updated versions of the integrated OV Libraries. Final versions are pending in
-  [Built on OV Libraries](README.md#built-on-ov-libraries).
+- Updated integrated libraries: ovstage 0.4, ovrtx 0.7, ovui 0.3.1, ovphysx 0.8,
+  and ovlive 0.2.0. See [Built on OV Libraries](README.md#built-on-ov-libraries).
 - Scene-loading and runtime performance improvements. Full performance parity
   with Kit 110.4 has not been reached.
 - OmniGraph compatibility fixes and extension integration updates. These do not
@@ -35,7 +35,7 @@ a production migration target.
 - Additional viewport windows can cause crashes on Windows or Linux.
 
 Review [Known Issues and Compatibility Changes](README.md#known-issues-and-compatibility-changes)
-before testing your application or extensions. Download placeholders are in
+before testing your application or extensions. Packages are listed in
 [Downloads](README.md#downloads).
 
 <a id="early-access-1"></a>
