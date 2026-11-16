@@ -89,9 +89,6 @@ separately, extract it into its own folder.
 
 ### Early Access 2
 
-EA2 download links will be added when the release packages are published.
-The placeholders below are not download links.
-
 | Package | Windows x86_64 | Linux x86_64 | Linux ARM64 (aarch64) |
 | --- | --- | --- | --- |
 | Kit SDK | TBD — EA2 SDK ZIP | TBD — EA2 SDK ZIP | TBD — EA2 SDK ZIP |
