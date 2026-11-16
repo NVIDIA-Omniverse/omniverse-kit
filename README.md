@@ -237,13 +237,34 @@ Review these limitations before evaluating an application or extension.
 | --- | --- |
 | Physics | Available through ovphysx, with the simulation and authoring limitations listed below. |
 | Live collaboration | Live synchronization is available through ovlive, but other participants are not visualized in the viewport. |
-| Linux ARM64 | Available for evaluation on DGX Spark, with a smaller extension set. The asset converter is unavailable; convert assets to USD on a supported x86_64 system before opening them on ARM64. |
+| Linux ARM64 | Available for evaluation on DGX Spark, with a smaller extension set. Asset conversion has partial ARM64 support without FBX. See [Linux ARM64 Limitations](#linux-arm64-limitations). |
 | Color management | OCIO color-management settings are unavailable in the default EA2 workflow; enabling OCIO alone has no effect. |
 | OmniGraph performance | Some OmniGraph workflows have known performance issues. Improvements are planned for a future release. |
 | Performance | EA2 improves scene loading and runtime performance, but does not achieve full Kit 110.4 parity. Content loading, first-frame latency, and timeline playback can still be slower. Performance and stability work continues in subsequent releases. |
 | First launch | Shader compilation can take several minutes, and the window or viewport may remain blank during initialization. Refer to [First Launch and Logs](#first-launch-and-logs). |
 | Fabric | Removed from Kit-facing APIs and extension workflows in this release. Applications and extensions that use Fabric require changes. For scene data APIs and examples, refer to [ovstage](https://github.com/NVIDIA-Omniverse/ovstage). |
 | Hydra | Deprecated in this release. For rendering APIs and examples, refer to the [ovrtx documentation](https://nvidia-omniverse.github.io/ovrtx/). |
+
+### Linux ARM64 Limitations
+
+The following limitations were identified on `dev/next/111` and are included
+here for EA2 review pending confirmation against the final release packages.
+Some extensions below are also listed under [Removed Extensions](#removed-extensions);
+this table does not imply they are included on other platforms.
+
+| Extension | ARM64 limitation |
+| --- | --- |
+| `omni.kit.converter.jt` | No ARM implementation. |
+| `omni.kit.converter.jt_core` | No ARM JT toolkit. |
+| `omni.kit.converter.cad` | Requires the unsupported JT extensions. |
+| `omni.usd.fileformat.sbsar` | Substance native libraries are unavailable on ARM. |
+| `omni.kit.property.sbsar` | Requires the unsupported Substance file-format extension. |
+| `omni.kit.xr.cloudxr` | ARM is explicitly excluded from its build. |
+| `omni.kit.profiler.tracy` | Bundled Tracy binaries are available only for Windows/Linux x86_64. |
+| `omni.kit.asset_converter` | Partial ARM support; the ARM package does not support FBX. |
+
+For FBX content, convert to USD on a supported x86_64 system before opening it
+on ARM64.
 
 ### Physics Limitations
 
@@ -311,7 +332,7 @@ Removal status applies to this release. Future availability is not specified.
 | Layer Stack window | Use the Layers window provided by [`omni.kit.widget.layers`](https://docs.omniverse.nvidia.com/kit/docs/omni.kit.widget.layers/1.9.2/Overview.html) to view and edit USD layers. |
 | Legacy behavior scripting (`omni.kit.scripting`) | The successor is `omni.behavior.scripting.bundle`, which is not included in the Kit SDK. The Script Editor (`omni.kit.window.script_editor`) remains available for running Python scripts. |
 | Legacy Warp wrapper and samples | `omni.warp.core` remains packaged. For standalone use, NVIDIA Warp is available as the [`warp-lang` Python package](https://github.com/NVIDIA/warp). |
-| CAD, DGN, HOOPS, and JT import | These importers are not included. Convert CAD content to USD before opening it in Kit. On x86_64, general asset conversion remains available through [`omni.kit.asset_converter`](https://docs.omniverse.nvidia.com/extensions/latest/ext_asset-converter.html) for supported formats such as OBJ, FBX, and glTF. |
+| CAD, DGN, HOOPS, and JT import | These importers are not included. Convert CAD content to USD before opening it in Kit. On x86_64, general asset conversion remains available through [`omni.kit.asset_converter`](https://docs.omniverse.nvidia.com/extensions/latest/ext_asset-converter.html) for supported formats such as OBJ, FBX, and glTF. Its ARM64 package has partial support and excludes FBX; see [Linux ARM64 Limitations](#linux-arm64-limitations). |
 
 #### Deprecated Extensions
 
