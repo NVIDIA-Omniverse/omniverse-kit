@@ -13,16 +13,21 @@ a production migration target.
 - Physics simulation and basic authoring through ovphysx.
 - Live Session integration through ovlive for collaborative editing.
 - Linux ARM64 SDK and kernel packages for evaluation on DGX Spark, alongside Windows and Linux x86_64.
-- Optional OVRTX loading for applications that only need stage operations without rendering.
+- Optional ovrtx loading for applications that only need stage operations without rendering.
+  Refer to [Renderer Selection](README.md#renderer-selection).
 
 ### Changed
 
-- Updated integrated libraries: ovstage 0.4, ovrtx 0.7, ovui 0.3.1, ovphysx 0.8,
-  and ovlive 0.2.0. See [Built on OV Libraries](README.md#built-on-ov-libraries).
+- Library versions in this release: ovstage 0.4, ovrtx 0.7, ovui 0.3.1, ovphysx 0.8,
+  and ovlive 0.2.0. Refer to [Built on OV Libraries](README.md#built-on-ov-libraries).
 - Scene-loading and runtime performance improvements. Full performance parity
   with Kit 110.4 has not been reached.
 - OmniGraph compatibility fixes and extension integration updates. These do not
   imply complete extension or workflow parity with Kit 110.4.
+
+- The EA1 multi-GPU flickering restriction no longer applies.
+- The EA1 spatial-audio limitation is narrowed to deleted or deactivated
+  listener tracking; refer to [Additional Known Issues](README.md#additional-known-issues).
 
 ### Known Issues
 
@@ -31,7 +36,10 @@ a production migration target.
 - Linux ARM64 has [extension limitations](README.md#linux-arm64-limitations).
   The asset converter has partial ARM support; FBX is unavailable.
 - OCIO color management is not available through the default EA2 settings.
-- Content loading, startup, and timeline playback can be slower than Kit 110.4.
+- Content loading, first-frame latency, and timeline playback can be slower than Kit 110.4.
+- Viewport FPS can be lower than Kit 110.4 while moving the camera, making scene navigation less smooth.
+- OmniGraph GPU, copy, retype, bundle, and scene workloads can still be slower than Kit 110.4.
+- First-launch shader compilation can take several minutes, with a blank window or viewport during initialization.
 - Additional viewport windows can cause crashes on Windows or Linux.
 
 Review [Known Issues and Compatibility Changes](README.md#known-issues-and-compatibility-changes)
@@ -48,28 +56,28 @@ providing feedback.
 
 ### Added
 
-- Architecture built on ovstage, ovrtx, and ovui. Refer to [Built on OV Libraries](README.md#built-on-ov-libraries).
-- Kit Base Editor for Windows and Linux. Refer to [Applications](README.md#applications).
-- SDK with bundled Kit App Template tooling. Refer to [Create a Project from a Template](README.md#create-a-project-from-a-template).
+- Architecture built on ovstage, ovrtx, and ovui. Refer to [Built on OV Libraries](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#built-on-ov-libraries).
+- Kit Base Editor for Windows and Linux. Refer to [Applications](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#applications).
+- SDK with bundled Kit App Template tooling. Refer to [Create a Project from a Template](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#create-a-project-from-a-template).
 
 ### Deprecated
 
-- Hydra. Refer to [Changes from Kit 110.x](README.md#changes-from-kit-110x).
-- Seven extensions remain available with deprecation warnings. Refer to [Deprecated Extensions](README.md#deprecated-extensions).
+- Hydra. Refer to [Changes from Kit 110.x](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#changes-from-kit-110x).
+- Seven extensions remain available with deprecation warnings. Refer to [Deprecated Extensions](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#deprecated-extensions).
 
 ### Removed
 
-- Fabric from Kit-facing APIs and extension workflows. Refer to [Changes from Kit 110.x](README.md#changes-from-kit-110x).
-- 50 extensions compared with Kit 110.x. Refer to [Removed Extensions](README.md#removed-extensions).
+- Fabric from Kit-facing APIs and extension workflows. Refer to [Changes from Kit 110.x](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#changes-from-kit-110x).
+- 50 extensions compared with Kit 110.x. Refer to [Removed Extensions](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#removed-extensions).
 
 ### Known Issues
 
 - **Physics:** Physics is disabled in Early Access 1. Integration with ovphysx is planned for Early Access 2.
 - **OmniGraph performance:** Some OmniGraph workflows have known performance issues. Improvements are planned for a future release.
 - **Content loading:** Content loading is slower than in Kit 110.4. Improvements to loading performance are planned across upcoming releases.
-- **First launch:** Shader compilation can take several minutes, and the window or viewport may remain blank during initialization. Refer to [First Launch and Logs](README.md#first-launch-and-logs).
+- **First launch:** Shader compilation can take several minutes, and the window or viewport may remain blank during initialization. Refer to [First Launch and Logs](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#first-launch-and-logs).
 
 For the EA1-specific known issues and extension availability changes, refer to
 [the archived EA1 README](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#known-issues-and-compatibility-changes).
 
-For setup instructions, refer to [Getting Started](README.md#getting-started).
+For setup instructions, refer to [Getting Started](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md#getting-started).
