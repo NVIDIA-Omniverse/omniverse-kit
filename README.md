@@ -87,7 +87,7 @@ The **Kit Kernel** is a smaller package containing the core runtime and template
 tooling, without the SDK's bundled extension collection. If you download it
 separately, extract it into its own folder.
 
-### Early Access 2
+### Early Access 2 Downloads
 
 | Package | Windows x86_64 | Linux x86_64 | Linux ARM64 (aarch64) |
 | --- | --- | --- | --- |
