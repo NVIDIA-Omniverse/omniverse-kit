@@ -171,6 +171,57 @@ graphics support.
    ./omni.app.editor.base.sh
    ```
 
+### Linux ARM64 Setup (DGX Spark)
+
+Use the **Linux ARM64 (aarch64) Kit SDK** from [Downloads](#downloads) on
+DGX Spark with an NVIDIA GB10 GPU. The tested configuration is **Ubuntu 24.04**
+with NVIDIA driver **580.159.03**. Use a desktop session with NVIDIA graphics
+support and run the setup directly on the ARM64 machine.
+
+1. Check the architecture and driver:
+
+   ```bash
+   uname -m
+   nvidia-smi
+   ```
+
+   The architecture should be `aarch64`. Select the ARM64 SDK, not the Linux
+   x86_64 package.
+
+2. Follow [Extract and Launch on Linux](#extract-and-launch-on-linux) to extract
+   the SDK and run Kit Base Editor. The SDK includes its bundled extensions;
+   you do not need to download the kernel separately.
+
+3. To create your own application, run the SDK's `./new_project.sh` and choose
+   a writable project directory. In the generated project directory, run:
+
+   ```bash
+   ./repo.sh template new
+   ```
+
+   Select **Application**, then **Kit Base Editor**, and enter the requested
+   application name, display name, and version.
+
+4. Build the project, then launch the generated application:
+
+   ```bash
+   ./repo.sh build
+   ./repo.sh launch
+   ```
+
+   Select your application when prompted. Keep the extracted SDK in place:
+   the generated project uses its local Kit kernel. Template builds may
+   download additional dependencies, so internet access is required.
+
+5. Open a USD scene and confirm that it renders. Allow the first launch to
+   finish compiling shaders before interacting with the application. See
+   [First Launch and Logs](#first-launch-and-logs) for startup and diagnostic
+   guidance.
+
+Review [Linux ARM64 Limitations](#linux-arm64-limitations) before selecting
+extensions or importing assets. Build and run native extensions for aarch64;
+x86_64 native binaries cannot be reused on ARM64.
+
 ### First Launch and Logs
 
 Allow the first launch to finish compiling shaders. This can take several minutes,
