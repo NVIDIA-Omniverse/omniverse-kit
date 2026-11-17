@@ -237,6 +237,7 @@ Review these limitations before evaluating an application or extension.
 | Color management | OCIO color-management settings are unavailable in the default EA2 workflow; enabling OCIO alone has no effect. |
 | OmniGraph performance | GPU, copy, retype, bundle, and scene workloads can still be slower than Kit 110.4. |
 | Performance | Content loading, first-frame latency, and timeline playback can be slower than Kit 110.4. Full performance parity has not been reached. |
+| Camera movement | Viewport FPS can be lower than Kit 110.4 while moving the camera, making scene navigation less smooth. Static-view FPS does not reflect performance during camera movement. |
 | First launch | Shader compilation can take several minutes, and the window or viewport may remain blank during initialization. Refer to [First Launch and Logs](#first-launch-and-logs). |
 | Fabric | Removed from Kit-facing APIs and extension workflows. Applications and extensions that use Fabric require changes. For scene data APIs and examples, refer to [ovstage](https://github.com/NVIDIA-Omniverse/ovstage). |
 | Hydra | Deprecated. For rendering APIs and examples, refer to the [ovrtx documentation](https://nvidia-omniverse.github.io/ovrtx/). |
