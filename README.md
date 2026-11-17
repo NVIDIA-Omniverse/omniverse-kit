@@ -124,8 +124,7 @@ its bundled templates, refer to
 - **GPU:** An NVIDIA GPU with RTX rendering support.
 
 - **NVIDIA graphics driver:** Windows x86_64 requires **595.97 or later**.
-  Linux x86_64 requires **595.58.03 or later**. DGX Spark has been tested with
-  **580.159.03**.
+  Linux x86_64 requires **595.58.03 or later**.
 
 - **Installation folder:** A writable path, such as `C:\OmniverseKit` on Windows
   or `$HOME/OmniverseKit` on Linux. Use a short Windows path to avoid path-length
@@ -174,8 +173,8 @@ graphics support.
 ### Linux ARM64 Setup (DGX Spark)
 
 Use the **Linux ARM64 (aarch64) Kit SDK** from [Downloads](#downloads) on
-DGX Spark with an NVIDIA GB10 GPU. The tested configuration is **Ubuntu 24.04**
-with NVIDIA driver **580.159.03**. Run `uname -m` to confirm the architecture
+DGX Spark with an NVIDIA GB10 GPU and **Ubuntu 24.04**.
+Run `uname -m` to confirm the architecture
 is `aarch64` and `nvidia-smi` to check the GPU and driver.
 
 Follow [Extract and Launch on Linux](#extract-and-launch-on-linux) and
