@@ -31,7 +31,7 @@ RTX rendering, user interfaces, physics, and live collaboration.
 | [ovstage](https://github.com/NVIDIA-Omniverse/ovstage) | 0.4 | Shared scene data access and management for OpenUSD-based workflows. |
 | [ovrtx](https://github.com/NVIDIA-Omniverse/ovrtx) | 0.7 | RTX rendering, visualization, and sensor simulation. |
 | [ovui](https://github.com/NVIDIA-Omniverse/ovui) | 0.3.1 | User interface, widget, and scene interaction capabilities. |
-| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | 0.8 | Physics simulation and basic physics authoring. See [Physics Limitations](#physics-limitations). |
+| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | 0.8 | Physics simulation and basic physics authoring. Refer to [Physics Limitations](#physics-limitations). |
 | [ovlive](https://github.com/NVIDIA-Omniverse/ovlive) | 0.2.0 | Live Session synchronization for collaborative editing. Participant visualization is not available. |
 
 These libraries are also available independently of Kit. Follow the links above
@@ -41,7 +41,8 @@ for their APIs, examples, installation instructions, and license terms.
 
 Kit retains its application and extension model while using OV Libraries for core
 services. ovstage manages shared OpenUSD scene data, ovrtx provides RTX rendering,
-and ovui provides user interface capabilities.
+and ovui provides user interface capabilities. ovphysx provides physics simulation
+and authoring, and ovlive provides Live Session synchronization.
 
 Fabric is removed from Kit-facing APIs and extension workflows, and Hydra is
 deprecated. If your extension uses Fabric or Hydra, review its scene data and
@@ -51,7 +52,7 @@ before loading it in Kit on OV Libraries.
 
 ## Early Access Releases
 
-This README describes Early Access 2. See the [changelog](CHANGELOG.md) for
+This README describes Early Access 2 (EA2). Refer to the [changelog](CHANGELOG.md) for
 release history and changes between versions.
 
 Early access releases are not officially supported products and do not include
@@ -118,10 +119,12 @@ its bundled templates, refer to
 
 ### Requirements
 
-- **Operating System**: Windows 10/11 (x86_64), Linux x86_64 (Ubuntu 22.04
+- **Operating System:** Windows 10/11 (x86_64), Linux x86_64 (Ubuntu 22.04
   or newer), or Linux ARM64 on DGX Spark. Windows ARM64 is not included in EA2.
 
 - **GPU:** An NVIDIA GPU with RTX rendering support.
+
+- **Linux ARM64 (DGX Spark):** Ubuntu 24.04 with an NVIDIA GB10 GPU.
 
 - **NVIDIA graphics driver:** Windows x86_64 requires **595.97 or later**.
   Linux x86_64 requires **595.58.03 or later**.
@@ -233,28 +236,22 @@ Review these limitations before evaluating an application or extension.
 | --- | --- |
 | Physics | Available through ovphysx, with the simulation and authoring limitations listed below. |
 | Live collaboration | Live synchronization is available through ovlive, but other participants are not visualized in the viewport. |
-| Linux ARM64 | Available for evaluation on DGX Spark, with a smaller extension set. Asset conversion has partial ARM64 support without FBX. See [Linux ARM64 Limitations](#linux-arm64-limitations). |
+| Linux ARM64 | Available for evaluation on DGX Spark, with a smaller extension set. Asset conversion has partial ARM64 support without FBX. Refer to [Linux ARM64 Limitations](#linux-arm64-limitations). |
 | Color management | OCIO color-management settings are unavailable in the default EA2 workflow; enabling OCIO alone has no effect. |
 | OmniGraph performance | GPU, copy, retype, bundle, and scene workloads can still be slower than Kit 110.4. |
 | Performance | Content loading, first-frame latency, and timeline playback can be slower than Kit 110.4. Full performance parity has not been reached. |
-| Camera movement | Viewport FPS can be lower than Kit 110.4 while moving the camera, making scene navigation less smooth. Static-view FPS does not reflect performance during camera movement. |
+| Camera movement | Viewport FPS can be lower than Kit 110.4 while moving the camera, making scene navigation less smooth. |
 | First launch | Shader compilation can take several minutes, and the window or viewport may remain blank during initialization. Refer to [First Launch and Logs](#first-launch-and-logs). |
 | Fabric | Removed from Kit-facing APIs and extension workflows. Applications and extensions that use Fabric require changes. For scene data APIs and examples, refer to [ovstage](https://github.com/NVIDIA-Omniverse/ovstage). |
 | Hydra | Deprecated. For rendering APIs and examples, refer to the [ovrtx documentation](https://nvidia-omniverse.github.io/ovrtx/). |
 
 ### Linux ARM64 Limitations
 
-The following extensions have ARM64 limitations. For availability across
-platforms, also refer to [Removed Extensions](#removed-extensions).
+The following limitations are specific to ARM64. Extensions removed from all
+platforms are listed under [Removed Extensions](#removed-extensions).
 
 | Extension | ARM64 limitation |
 | --- | --- |
-| `omni.kit.converter.jt` | No ARM implementation. |
-| `omni.kit.converter.jt_core` | No ARM JT toolkit. |
-| `omni.kit.converter.cad` | Requires the unsupported JT extensions. |
-| `omni.usd.fileformat.sbsar` | Substance native libraries are unavailable on ARM. |
-| `omni.kit.property.sbsar` | Requires the unsupported Substance file-format extension. |
-| `omni.kit.xr.cloudxr` | ARM is explicitly excluded from its build. |
 | `omni.kit.profiler.tracy` | Bundled Tracy binaries are available only for Windows/Linux x86_64. |
 | `omni.kit.asset_converter` | Partial ARM support; the ARM package does not support FBX. |
 
@@ -272,7 +269,7 @@ on ARM64.
 - DirectGPU operation without readback is unsupported.
 - Viewport grab/drag interaction is unsupported for GPU dynamics.
 - Contact and trigger reporting does not support shared compound-collider identities.
-- Drive and Limit APIs are unavailable through **Property > +Add**.
+- Drive and Limit APIs are unavailable through **Property** > **+Add**.
 - D6, Spherical, and Distance joint creation controls are unavailable.
 - Physics Inspector supports one window; multiple independent windows are unavailable.
 - Physics authoring on instanceable prims is refused by design.
@@ -281,11 +278,9 @@ on ARM64.
 
 - Opening additional viewport windows can crash Kit on Windows or Linux.
   Avoid workflows that require multiple viewport windows while evaluating EA2.
-
 - Kit Base Editor is missing the viewport lighting menu. Scenes without lights
   appear black.
-- Plugin loading can report `Ignoring plugin … since a plugin with the same name
-  is loaded from … omni.runtime.core`.
+- Plugin loading can report `Ignoring plugin … since a plugin with the same name is loaded from … omni.runtime.core`.
 - Audio listener tracking can retain deleted or deactivated listeners, producing
   incorrect listener counts or stale listener references.
 - Box selection does not select lights.
@@ -368,6 +363,20 @@ dependencies. Use **Window** > **Extensions** to check its status and the
 For general command-line syntax, refer to the
 [Kit configuration reference](https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/configuring.html).
 
+### Renderer Selection
+
+Applications that need RTX rendering must enable `omni.kit.viewport.rtx`.
+Add it to the application's `.kit` file:
+
+```toml
+[dependencies]
+"omni.kit.viewport.rtx" = {}
+```
+
+Kit Base Editor already selects the renderer. Stage-only applications can use
+Runtime Core and ovstage without loading ovrtx. The viewport bundle alone does
+not select the RTX renderer.
+
 ### Dependencies and API References
 
 The Kit SDK includes the extensions needed to run Kit Base Editor.
@@ -390,9 +399,9 @@ helps guide future updates.
 
 ## Related Resources
 
-- [OV Libraries](#built-on-ov-libraries)—use individual libraries
+- [OV Libraries](#built-on-ov-libraries) — use individual libraries
   directly in your own applications.
-- [Kit App Template](https://github.com/NVIDIA-Omniverse/kit-app-template)—application
+- [Kit App Template](https://github.com/NVIDIA-Omniverse/kit-app-template) — application
   templates for existing Kit releases.
 
 ## Data Collection
