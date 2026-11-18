@@ -31,7 +31,7 @@ RTX rendering, user interfaces, physics, and live collaboration.
 | [ovstage](https://github.com/NVIDIA-Omniverse/ovstage) | 0.4 | Shared scene data access and management for OpenUSD-based workflows. |
 | [ovrtx](https://github.com/NVIDIA-Omniverse/ovrtx) | 0.7 | RTX rendering, visualization, and sensor simulation. |
 | [ovui](https://github.com/NVIDIA-Omniverse/ovui) | 0.3.1 | User interface, widget, and scene interaction capabilities. |
-| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | 0.8 | Physics simulation and basic physics authoring. Refer to [Physics Limitations](#physics-limitations). |
+| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | 0.8 | Physics simulation (disabled by default). Physics authoring UI is not included. Refer to [Physics Limitations](#physics-limitations). |
 | [ovlive](https://github.com/NVIDIA-Omniverse/ovlive) | 0.2.0 | Live Session synchronization for collaborative editing. Participant visualization is not available. |
 
 These libraries are also available independently of Kit. Follow the links above
@@ -41,8 +41,8 @@ for their APIs, examples, installation instructions, and license terms.
 
 Kit retains its application and extension model while using OV Libraries for core
 services. ovstage manages shared OpenUSD scene data, ovrtx provides RTX rendering,
-and ovui provides user interface capabilities. ovphysx provides physics simulation
-and authoring, and ovlive provides Live Session synchronization.
+and ovui provides user interface capabilities. ovphysx provides physics simulation,
+and ovlive provides Live Session synchronization.
 
 Fabric is removed from Kit-facing APIs and extension workflows, and Hydra is
 deprecated. If your extension uses Fabric or Hydra, review its scene data and
@@ -234,7 +234,7 @@ Review these limitations before evaluating an application or extension.
 
 | Area | Current status |
 | --- | --- |
-| Physics | Available through ovphysx, with the simulation and authoring limitations listed below. |
+| Physics | Simulation is available through ovphysx but disabled by default. The physics authoring UI extension is not included in EA2. Refer to [Physics Limitations](#physics-limitations). |
 | Live collaboration | Live synchronization is available through ovlive, but other participants are not visualized in the viewport. |
 | Linux ARM64 | Available for evaluation on DGX Spark, with a smaller extension set. Asset conversion has partial ARM64 support without FBX. Refer to [Linux ARM64 Limitations](#linux-arm64-limitations). |
 | Color management | OCIO color-management settings are unavailable in the default EA2 workflow; enabling OCIO alone has no effect. |
@@ -260,6 +260,12 @@ on ARM64.
 
 ### Physics Limitations
 
+- The physics authoring UI extension (`omni.kit.physics.authoring`) is not included
+  in EA2. Physics authoring controls and the physics toolbar are unavailable.
+- Physics simulation is available but disabled by default in the supplied
+  applications. Enable `omni.kit.physics.playback` to load the physics runtime
+  and connect it to the timeline.
+
 - Creating scalar String attributes after scene load while rendering can trigger
   runtime recovery and loss of runtime-only state. Authored USD values remain intact.
 - Editing some physics properties during simulation can reset motion.
@@ -269,10 +275,6 @@ on ARM64.
 - DirectGPU operation without readback is unsupported.
 - Viewport grab/drag interaction is unsupported for GPU dynamics.
 - Contact and trigger reporting does not support shared compound-collider identities.
-- Drive and Limit APIs are unavailable through **Property** > **+Add**.
-- D6, Spherical, and Distance joint creation controls are unavailable.
-- Physics Inspector supports one window; multiple independent windows are unavailable.
-- Physics authoring on instanceable prims is refused by design.
 
 ### Additional Known Issues
 
