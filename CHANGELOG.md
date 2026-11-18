@@ -10,7 +10,7 @@ a production migration target.
 
 ### Added
 
-- Physics simulation and basic authoring through ovphysx.
+- Physics simulation through ovphysx, available but disabled by default.
 - Live Session integration through ovlive for collaborative editing.
 - Linux ARM64 SDK and kernel packages for evaluation on DGX Spark, alongside Windows and Linux x86_64.
 - Optional ovrtx loading for applications that only need stage operations without rendering.
@@ -31,7 +31,9 @@ a production migration target.
 
 ### Known Issues
 
-- Physics simulation and authoring have [documented limitations](README.md#physics-limitations).
+- The physics authoring UI extension (`omni.kit.physics.authoring`) is not included.
+  Physics simulation is disabled by default; refer to [Physics Limitations](README.md#physics-limitations)
+  for activation and runtime limitations.
 - Live synchronization does not visualize other participants in the viewport.
 - Linux ARM64 has [extension limitations](README.md#linux-arm64-limitations).
   The asset converter has partial ARM support; FBX is unavailable.
