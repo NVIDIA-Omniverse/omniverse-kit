@@ -23,15 +23,16 @@ extensions, and provide feedback.
 
 ## Built on OV Libraries
 
-Kit on OV Libraries uses ovstage, ovrtx, and ovui for scene data, RTX rendering,
-and user interfaces.
+Kit on OV Libraries uses ovstage, ovrtx, ovui, ovphysx, and ovlive for scene data,
+RTX rendering, user interfaces, physics, and live collaboration.
 
 | Library | Version | Role and Availability |
 | --- | --- | --- |
-| [ovstage](https://github.com/NVIDIA-Omniverse/ovstage) | 0.3 | Shared scene data access and management for OpenUSD-based workflows. |
-| [ovrtx](https://github.com/NVIDIA-Omniverse/ovrtx) | 0.6 | RTX rendering, visualization, and sensor simulation. |
-| [ovui](https://github.com/NVIDIA-Omniverse/ovui) | 0.3 | User interface, widget, and scene interaction capabilities. |
-| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | — | Physics is disabled in Early Access 1. Integration with ovphysx is planned for Early Access 2. |
+| [ovstage](https://github.com/NVIDIA-Omniverse/ovstage) | 0.4 | Shared scene data access and management for OpenUSD-based workflows. |
+| [ovrtx](https://github.com/NVIDIA-Omniverse/ovrtx) | 0.7 | RTX rendering, visualization, and sensor simulation. |
+| [ovui](https://github.com/NVIDIA-Omniverse/ovui) | 0.3.1 | User interface, widget, and scene interaction capabilities. |
+| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | 0.8 | Physics simulation on Windows/Linux x86_64 (disabled by default). Physics authoring UI is not included. Refer to [Physics Limitations](#physics-limitations). |
+| [ovlive](https://github.com/NVIDIA-Omniverse/ovlive) | 0.2.0 | Live Session synchronization for collaborative editing. Participant visualization is not available. |
 
 These libraries are also available independently of Kit. Follow the links above
 for their APIs, examples, installation instructions, and license terms.
@@ -40,7 +41,8 @@ for their APIs, examples, installation instructions, and license terms.
 
 Kit retains its application and extension model while using OV Libraries for core
 services. ovstage manages shared OpenUSD scene data, ovrtx provides RTX rendering,
-and ovui provides user interface capabilities.
+and ovui provides user interface capabilities. ovphysx provides physics simulation
+on Windows/Linux x86_64, and ovlive provides Live Session synchronization.
 
 Fabric is removed from Kit-facing APIs and extension workflows, and Hydra is
 deprecated. If your extension uses Fabric or Hydra, review its scene data and
@@ -50,9 +52,8 @@ before loading it in Kit on OV Libraries.
 
 ## Early Access Releases
 
-| Release | Description |
-| --- | --- |
-| [Early Access 1](CHANGELOG.md#early-access-1) | First release of Kit on OV Libraries for evaluating applications and extensions and providing feedback. |
+This README describes Early Access 2 (EA2). Refer to the [changelog](CHANGELOG.md) for
+release history and changes between versions.
 
 Early access releases are not officially supported products and do not include
 official support.
@@ -87,6 +88,19 @@ The **Kit Kernel** is a smaller package containing the core runtime and template
 tooling, without the SDK's bundled extension collection. If you download it
 separately, extract it into its own folder.
 
+### Early Access 2 Downloads
+
+| Package | Windows x86_64 | Linux x86_64 | Linux ARM64 (aarch64) |
+| --- | --- | --- | --- |
+| Kit SDK | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-sdk%40111.1.0%2Bea2.windows-x86_64.release.zip) | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-sdk%40111.1.0%2Bea2.manylinux_2_35_x86_64.release.zip) | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-sdk%40111.1.0%2Bea2.manylinux_2_35_aarch64.release.zip) |
+| Kit Kernel | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-kernel%40111.1.0%2Bea2.windows-x86_64.release.zip) | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-kernel%40111.1.0%2Bea2.manylinux_2_35_x86_64.release.zip) | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-kernel%40111.1.0%2Bea2.manylinux_2_35_aarch64.release.zip) |
+
+### Early Access 1 Downloads
+
+The following packages are **Early Access 1**.
+Use the [EA1 setup documentation](https://github.com/NVIDIA-Omniverse/omniverse-kit/blob/3cae0fb0a263db0dd30aa4a31c362b53d2a4d1fa/README.md)
+with these packages.
+
 | Package | Windows x86_64 | Linux x86_64 |
 | --- | --- | --- |
 | Kit SDK | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-sdk%40111.0.0%2Bfeature.windows-x86_64.release.zip) | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-sdk%40111.0.0%2Bfeature.manylinux_2_35_x86_64.release.zip) |
@@ -105,12 +119,16 @@ its bundled templates, refer to
 
 ### Requirements
 
-- **Operating System**: Windows 10/11 or Linux (Ubuntu 22.04 or newer).
+- **Operating System:** Windows 10/11 (x86_64), Linux x86_64 (Ubuntu 22.04
+  or newer), or Linux ARM64 on DGX Spark. Windows ARM64 is not included in EA2.
 
 - **GPU:** An NVIDIA GPU with RTX rendering support.
 
-- **NVIDIA graphics driver:** Windows requires **595.97 or later**. Linux
-  requires **595.58.03 or later**.
+- **Linux ARM64 (DGX Spark) configuration:** Ubuntu 24.04.4 LTS with an NVIDIA
+  GB10 GPU and NVIDIA driver **580.159.03**.
+
+- **NVIDIA graphics driver:** Windows x86_64 requires **595.97 or later**.
+  Linux x86_64 requires **595.58.03 or later**.
 
 - **Installation folder:** A writable path, such as `C:\OmniverseKit` on Windows
   or `$HOME/OmniverseKit` on Linux. Use a short Windows path to avoid path-length
@@ -138,7 +156,8 @@ its bundled templates, refer to
 Use Bash and `unzip`. For Kit Base Editor, use a desktop session with NVIDIA
 graphics support.
 
-1. Download the Linux x86_64 **Kit SDK** ZIP from [Downloads](#downloads).
+1. Download the **Kit SDK** ZIP matching your Linux architecture from
+   [Downloads](#downloads): x86_64 for an x86 PC or ARM64 (aarch64) for DGX Spark.
    Save it as `kit-sdk.zip` and open a terminal in the download directory.
 2. Extract the archive on Linux to preserve executable permissions and symbolic
    links. Use an empty destination folder, such as `$HOME/OmniverseKit`:
@@ -154,6 +173,19 @@ graphics support.
    cd "$HOME/OmniverseKit"
    ./omni.app.editor.base.sh
    ```
+
+### Linux ARM64 Setup (DGX Spark)
+
+Use the **Linux ARM64 (aarch64) Kit SDK** from [Downloads](#downloads) on
+DGX Spark with the GPU, OS, and driver listed in [Requirements](#requirements).
+Run `uname -m` to confirm the architecture
+is `aarch64` and `nvidia-smi` to check the GPU and driver.
+
+Follow [Extract and Launch on Linux](#extract-and-launch-on-linux) and
+[Create a Project from a Template](#create-a-project-from-a-template) on the
+ARM64 machine. Review [Linux ARM64 Limitations](#linux-arm64-limitations)
+before selecting extensions or importing assets. Native extensions must be
+built for aarch64; x86_64 native binaries cannot be reused on ARM64.
 
 ### First Launch and Logs
 
@@ -197,32 +229,67 @@ its README for building and launching your application or extension.
 
 ## Known Issues and Compatibility Changes
 
-These notes apply to this release. Compatibility changes are relative to Kit
-110.x; the content-loading performance comparison uses Kit 110.4 specifically.
+These notes apply to EA2. Compatibility changes are relative to Kit
+110.x; performance comparisons use Kit 110.4 specifically.
 Review these limitations before evaluating an application or extension.
 
 | Area | Current status |
 | --- | --- |
-| Physics | Physics is disabled in Early Access 1. Integration with ovphysx is planned for Early Access 2. |
-| OmniGraph performance | Some OmniGraph workflows have known performance issues. Improvements are planned for a future release. |
-| Content loading | Content loading is slower than in Kit 110.4. Improvements to loading performance are planned across upcoming releases. |
+| Physics | Simulation is available through ovphysx on Windows/Linux x86_64 but disabled by default. The physics authoring UI extension is not included in EA2. Refer to [Physics Limitations](#physics-limitations). |
+| Live collaboration | Live synchronization is available through ovlive, but other participants are not visualized in the viewport. |
+| Linux ARM64 | Available for evaluation on DGX Spark, with a smaller extension set. Asset conversion has partial ARM64 support without FBX. Refer to [Linux ARM64 Limitations](#linux-arm64-limitations). |
+| Color management | OCIO color-management settings are unavailable in the default EA2 workflow; enabling OCIO alone has no effect. |
+| OmniGraph performance | GPU, copy, retype, bundle, and scene workloads can still be slower than Kit 110.4. |
+| Performance | Content loading, first-frame latency, and timeline playback can be slower than Kit 110.4. Full performance parity has not been reached. |
+| Camera movement | Viewport FPS can be lower than Kit 110.4 while moving the camera, making scene navigation less smooth. |
 | First launch | Shader compilation can take several minutes, and the window or viewport may remain blank during initialization. Refer to [First Launch and Logs](#first-launch-and-logs). |
-| Fabric | Removed from Kit-facing APIs and extension workflows in this release. Applications and extensions that use Fabric require changes. For scene data APIs and examples, refer to [ovstage](https://github.com/NVIDIA-Omniverse/ovstage). |
-| Hydra | Deprecated in this release. For rendering APIs and examples, refer to the [ovrtx documentation](https://nvidia-omniverse.github.io/ovrtx/). |
+| Fabric | Removed from Kit-facing APIs and extension workflows. Applications and extensions that use Fabric require changes. For scene data APIs and examples, refer to [ovstage](https://github.com/NVIDIA-Omniverse/ovstage). |
+| Hydra | Deprecated. For rendering APIs and examples, refer to the [ovrtx documentation](https://nvidia-omniverse.github.io/ovrtx/). |
+
+### Linux ARM64 Limitations
+
+The following limitations are specific to ARM64. Extensions removed from all
+platforms are listed under [Removed Extensions](#removed-extensions).
+
+| Extension | ARM64 limitation |
+| --- | --- |
+| `omni.kit.physics.playback` | The extension is packaged, but native ovphysx libraries are not included; physics simulation is unavailable on ARM64. |
+| `omni.kit.profiler.tracy` | Bundled Tracy binaries are available only for Windows/Linux x86_64. |
+| `omni.kit.asset_converter` | Partial ARM support; the ARM package does not support FBX. |
+
+For FBX content, convert to USD on a supported x86_64 system before opening it
+on ARM64.
+
+### Physics Limitations
+
+- The physics authoring UI extension (`omni.kit.physics.authoring`) is not included
+  in EA2. Physics authoring controls and the physics toolbar are unavailable.
+- On Windows/Linux x86_64, physics simulation is disabled by default in the
+  supplied applications. Enable `omni.kit.physics.playback` to load the physics
+  runtime and connect it to the timeline.
+- Physics simulation is unavailable on Linux ARM64: the playback extension is
+  packaged, but the native ovphysx libraries are not included.
+
+- Creating scalar String attributes after scene load while rendering can trigger
+  runtime recovery and loss of runtime-only state. Authored USD values remain intact.
+- Editing some physics properties during simulation can reset motion.
+  **Workaround:** stop simulation, edit the properties, then resume playback.
+- Clearing, blocking, or recreating PointInstancer arrays with rendering and physics
+  enabled can leave stale runtime values.
+- DirectGPU operation without readback is unsupported.
+- Viewport grab/drag interaction is unsupported for GPU dynamics.
+- Contact and trigger reporting does not support shared compound-collider identities.
 
 ### Additional Known Issues
 
-- Multi-GPU rendering can flicker and fail to display the viewport grid. Do not
-  use multi-GPU rendering in this release.
+- Opening additional viewport windows can crash Kit on Windows or Linux.
+  Avoid workflows that require multiple viewport windows while evaluating EA2.
 - Kit Base Editor is missing the viewport lighting menu. Scenes without lights
   appear black.
-- Plugin loading can report `Ignoring plugin … since a plugin with the same name
-  is loaded from … omni.runtime.core`.
-- Spatial audio does not work.
+- Plugin loading can report `Ignoring plugin … since a plugin with the same name is loaded from … omni.runtime.core`.
+- Audio listener tracking can retain deleted or deactivated listeners, producing
+  incorrect listener counts or stale listener references.
 - Box selection does not select lights.
-- Duplicate MDL directories can cause errors. As a workaround, close Kit and move
-  `exts/omni.runtime.core/bin/deps/mdl` from the extracted SDK folder to another
-  location outside it. Keep the directory so you can restore it later.
 
 ### Extension Availability Changes
 
@@ -232,8 +299,7 @@ in Kit Base Editor.
 
 #### Removed Extensions
 
-The following extensions were removed in this release compared with Kit 110.x.
-Removal status applies to this release. Future availability is not specified.
+The following extensions from Kit 110.x are not included.
 
 | Area | Removed Extensions |
 | --- | --- |
@@ -257,7 +323,7 @@ Removal status applies to this release. Future availability is not specified.
 | Layer Stack window | Use the Layers window provided by [`omni.kit.widget.layers`](https://docs.omniverse.nvidia.com/kit/docs/omni.kit.widget.layers/1.9.2/Overview.html) to view and edit USD layers. |
 | Legacy behavior scripting (`omni.kit.scripting`) | The successor is `omni.behavior.scripting.bundle`, which is not included in the Kit SDK. The Script Editor (`omni.kit.window.script_editor`) remains available for running Python scripts. |
 | Legacy Warp wrapper and samples | `omni.warp.core` remains packaged. For standalone use, NVIDIA Warp is available as the [`warp-lang` Python package](https://github.com/NVIDIA/warp). |
-| CAD, DGN, HOOPS, and JT import | These importers are not included. Convert CAD content to USD before opening it in Kit. General asset conversion remains available through [`omni.kit.asset_converter`](https://docs.omniverse.nvidia.com/extensions/latest/ext_asset-converter.html) for supported formats such as OBJ, FBX, and glTF. |
+| CAD, DGN, HOOPS, and JT import | These importers are not included. Convert CAD content to USD before opening it in Kit. On x86_64, general asset conversion remains available through [`omni.kit.asset_converter`](https://docs.omniverse.nvidia.com/extensions/latest/ext_asset-converter.html) for supported formats such as OBJ, FBX, and glTF. Its ARM64 package has partial support and excludes FBX; see [Linux ARM64 Limitations](#linux-arm64-limitations). |
 
 #### Deprecated Extensions
 
@@ -300,6 +366,21 @@ dependencies. Use **Window** > **Extensions** to check its status and the
 For general command-line syntax, refer to the
 [Kit configuration reference](https://docs.omniverse.nvidia.com/kit/docs/kit-manual/latest/guide/configuring.html).
 
+### Renderer Selection
+
+Applications that need RTX rendering can enable `omni.kit.viewport.rtx`.
+Add it to the application's `.kit` file:
+
+```toml
+[dependencies]
+"omni.kit.viewport.rtx" = {}
+```
+
+Alternatively, `omni.runtime.bundle` selects the RTX renderer; Kit Base Editor
+uses this bundle. Stage-only applications can use Runtime Core and ovstage
+without loading ovrtx. The viewport bundle alone does
+not select the RTX renderer.
+
 ### Dependencies and API References
 
 The Kit SDK includes the extensions needed to run Kit Base Editor.
@@ -322,9 +403,9 @@ helps guide future updates.
 
 ## Related Resources
 
-- [OV Libraries](#built-on-ov-libraries)—use individual libraries
+- [OV Libraries](#built-on-ov-libraries) — use individual libraries
   directly in your own applications.
-- [Kit App Template](https://github.com/NVIDIA-Omniverse/kit-app-template)—application
+- [Kit App Template](https://github.com/NVIDIA-Omniverse/kit-app-template) — application
   templates for existing Kit releases.
 
 ## Data Collection
