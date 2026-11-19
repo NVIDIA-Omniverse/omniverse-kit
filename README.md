@@ -92,8 +92,8 @@ separately, extract it into its own folder.
 
 | Package | Windows x86_64 | Linux x86_64 | Linux ARM64 (aarch64) |
 | --- | --- | --- | --- |
-| Kit SDK | TBD — EA2 SDK ZIP | TBD — EA2 SDK ZIP | TBD — EA2 SDK ZIP |
-| Kit Kernel | TBD — EA2 Kernel ZIP | TBD — EA2 Kernel ZIP | TBD — EA2 Kernel ZIP |
+| Kit SDK | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-sdk%40111.1.0%2Bea2.windows-x86_64.release.zip) | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-sdk%40111.1.0%2Bea2.manylinux_2_35_x86_64.release.zip) | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-sdk%40111.1.0%2Bea2.manylinux_2_35_aarch64.release.zip) |
+| Kit Kernel | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-kernel%40111.1.0%2Bea2.windows-x86_64.release.zip) | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-kernel%40111.1.0%2Bea2.manylinux_2_35_x86_64.release.zip) | [Download ZIP](https://d4i3qtqj3r0z5.cloudfront.net/kit-kernel%40111.1.0%2Bea2.manylinux_2_35_aarch64.release.zip) |
 
 ### Early Access 1 Downloads
 
