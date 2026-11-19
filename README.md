@@ -31,7 +31,7 @@ RTX rendering, user interfaces, physics, and live collaboration.
 | [ovstage](https://github.com/NVIDIA-Omniverse/ovstage) | 0.4 | Shared scene data access and management for OpenUSD-based workflows. |
 | [ovrtx](https://github.com/NVIDIA-Omniverse/ovrtx) | 0.7 | RTX rendering, visualization, and sensor simulation. |
 | [ovui](https://github.com/NVIDIA-Omniverse/ovui) | 0.3.1 | User interface, widget, and scene interaction capabilities. |
-| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | 0.8 | Physics simulation (disabled by default). Physics authoring UI is not included. Refer to [Physics Limitations](#physics-limitations). |
+| [ovphysx](https://github.com/NVIDIA-Omniverse/PhysX/tree/main/ovphysx) | 0.8 | Physics simulation on Windows/Linux x86_64 (disabled by default). Physics authoring UI is not included. Refer to [Physics Limitations](#physics-limitations). |
 | [ovlive](https://github.com/NVIDIA-Omniverse/ovlive) | 0.2.0 | Live Session synchronization for collaborative editing. Participant visualization is not available. |
 
 These libraries are also available independently of Kit. Follow the links above
@@ -41,8 +41,8 @@ for their APIs, examples, installation instructions, and license terms.
 
 Kit retains its application and extension model while using OV Libraries for core
 services. ovstage manages shared OpenUSD scene data, ovrtx provides RTX rendering,
-and ovui provides user interface capabilities. ovphysx provides physics simulation,
-and ovlive provides Live Session synchronization.
+and ovui provides user interface capabilities. ovphysx provides physics simulation
+on Windows/Linux x86_64, and ovlive provides Live Session synchronization.
 
 Fabric is removed from Kit-facing APIs and extension workflows, and Hydra is
 deprecated. If your extension uses Fabric or Hydra, review its scene data and
@@ -124,7 +124,8 @@ its bundled templates, refer to
 
 - **GPU:** An NVIDIA GPU with RTX rendering support.
 
-- **Linux ARM64 (DGX Spark):** Ubuntu 24.04 with an NVIDIA GB10 GPU.
+- **Linux ARM64 (DGX Spark) configuration:** Ubuntu 24.04.4 LTS with an NVIDIA
+  GB10 GPU and NVIDIA driver **580.159.03**.
 
 - **NVIDIA graphics driver:** Windows x86_64 requires **595.97 or later**.
   Linux x86_64 requires **595.58.03 or later**.
@@ -176,7 +177,7 @@ graphics support.
 ### Linux ARM64 Setup (DGX Spark)
 
 Use the **Linux ARM64 (aarch64) Kit SDK** from [Downloads](#downloads) on
-DGX Spark with an NVIDIA GB10 GPU and **Ubuntu 24.04**.
+DGX Spark with the GPU, OS, and driver listed in [Requirements](#requirements).
 Run `uname -m` to confirm the architecture
 is `aarch64` and `nvidia-smi` to check the GPU and driver.
 
@@ -234,7 +235,7 @@ Review these limitations before evaluating an application or extension.
 
 | Area | Current status |
 | --- | --- |
-| Physics | Simulation is available through ovphysx but disabled by default. The physics authoring UI extension is not included in EA2. Refer to [Physics Limitations](#physics-limitations). |
+| Physics | Simulation is available through ovphysx on Windows/Linux x86_64 but disabled by default. The physics authoring UI extension is not included in EA2. Refer to [Physics Limitations](#physics-limitations). |
 | Live collaboration | Live synchronization is available through ovlive, but other participants are not visualized in the viewport. |
 | Linux ARM64 | Available for evaluation on DGX Spark, with a smaller extension set. Asset conversion has partial ARM64 support without FBX. Refer to [Linux ARM64 Limitations](#linux-arm64-limitations). |
 | Color management | OCIO color-management settings are unavailable in the default EA2 workflow; enabling OCIO alone has no effect. |
@@ -252,6 +253,7 @@ platforms are listed under [Removed Extensions](#removed-extensions).
 
 | Extension | ARM64 limitation |
 | --- | --- |
+| `omni.kit.physics.playback` | The extension is packaged, but native ovphysx libraries are not included; physics simulation is unavailable on ARM64. |
 | `omni.kit.profiler.tracy` | Bundled Tracy binaries are available only for Windows/Linux x86_64. |
 | `omni.kit.asset_converter` | Partial ARM support; the ARM package does not support FBX. |
 
@@ -262,9 +264,11 @@ on ARM64.
 
 - The physics authoring UI extension (`omni.kit.physics.authoring`) is not included
   in EA2. Physics authoring controls and the physics toolbar are unavailable.
-- Physics simulation is available but disabled by default in the supplied
-  applications. Enable `omni.kit.physics.playback` to load the physics runtime
-  and connect it to the timeline.
+- On Windows/Linux x86_64, physics simulation is disabled by default in the
+  supplied applications. Enable `omni.kit.physics.playback` to load the physics
+  runtime and connect it to the timeline.
+- Physics simulation is unavailable on Linux ARM64: the playback extension is
+  packaged, but the native ovphysx libraries are not included.
 
 - Creating scalar String attributes after scene load while rendering can trigger
   runtime recovery and loss of runtime-only state. Authored USD values remain intact.
@@ -286,9 +290,6 @@ on ARM64.
 - Audio listener tracking can retain deleted or deactivated listeners, producing
   incorrect listener counts or stale listener references.
 - Box selection does not select lights.
-- Duplicate MDL directories can cause errors. As a workaround, close Kit and move
-  `exts/omni.runtime.core/bin/deps/mdl` from the extracted SDK folder to another
-  location outside it. Keep the directory so you can restore it later.
 
 ### Extension Availability Changes
 
@@ -367,7 +368,7 @@ For general command-line syntax, refer to the
 
 ### Renderer Selection
 
-Applications that need RTX rendering must enable `omni.kit.viewport.rtx`.
+Applications that need RTX rendering can enable `omni.kit.viewport.rtx`.
 Add it to the application's `.kit` file:
 
 ```toml
@@ -375,8 +376,9 @@ Add it to the application's `.kit` file:
 "omni.kit.viewport.rtx" = {}
 ```
 
-Kit Base Editor already selects the renderer. Stage-only applications can use
-Runtime Core and ovstage without loading ovrtx. The viewport bundle alone does
+Alternatively, `omni.runtime.bundle` selects the RTX renderer; Kit Base Editor
+uses this bundle. Stage-only applications can use Runtime Core and ovstage
+without loading ovrtx. The viewport bundle alone does
 not select the RTX renderer.
 
 ### Dependencies and API References
